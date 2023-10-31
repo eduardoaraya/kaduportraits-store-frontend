@@ -1,6 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  cleanDistDir: true,
+   images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'kaduportraits.s3.sa-east-1.amazonaws.com',
+        port: '',
+        pathname: '/public/',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;

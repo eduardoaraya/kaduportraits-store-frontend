@@ -1,5 +1,6 @@
 "use client";
 import { debounce_leading } from "@kaduportraits-store/utils/debounce";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 type Content = {
@@ -80,6 +81,7 @@ export function Catalog() {
             className="overflow-hidden m-3 max-w-[350px] max-h-[350px] flex justify-center items-center border-2 border-black"
           >
             <img alt="logo" width={350} height={350} src={url + photo.Key} />
+
           </div>
         ))}
       {loading && "Loading..."}

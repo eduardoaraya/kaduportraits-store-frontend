@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-
+ 
 type Content = {
   Key: string;
   Size: number;
@@ -19,6 +19,7 @@ export default function Catalog({
       {content.Catalog.filter((photo: Content) => photo.Size > 0).map(
         (photo: Content) => (
           <Image
+            key={photo.Key}
             alt="logo"
             width="400"
             height="100"
