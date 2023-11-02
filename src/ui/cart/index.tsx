@@ -71,11 +71,6 @@ export function Cart(): JSX.Element {
       });
       alert("Solicitação em andamento, aguarde e logo entraremos em contato!");
       expandCart(false);
-    } catch (_err) {
-      alert(
-        "Ocorreu um erro na sua solicitação, tente novamente ou contate o nosso suporte!"
-      );
-    } finally {
       localStorage.setItem(
         `_order::${new Date().getTime()}`,
         JSON.stringify(cart)
@@ -85,6 +80,12 @@ export function Cart(): JSX.Element {
           items: {},
           total: 0,
         });
+    } catch (_err) {
+      console.log(_err);
+      alert(
+        "Ocorreu um erro na sua solicitação, tente novamente ou contate o nosso suporte!"
+      );
+    } finally {
       setLoading(false);
     }
   };
