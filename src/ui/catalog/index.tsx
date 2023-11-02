@@ -1,16 +1,19 @@
 "use client";
 import { debounce_leading } from "@kaduportraits-store/utils/debounce";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Preview } from "../preview";
 import "./index.css";
 import { Content, Catalog } from "@kaduportraits-store/contracts/catalog";
+import { CartContext } from "@kaduportraits-store/context/cart-provider";
+import { OverlayerContext } from "@kaduportraits-store/context/overlayer-provider";
 
 export function Catalog() {
+  const { setOverlayer } = useContext(OverlayerContext);
+  const { cart, setCart } = useContext(CartContext);
   const [catalog, setCatalog] = useState<Content[]>([]);
   const [url, setUrl] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [hasData, setHasData] = useState<boolean>(true);
-  const [selecteds, setSelecteds] = useState<{ [k: string]: Content }>({});
   const [currentPhoto, setCurrentPhoto] = useState<{
     photo: Content;
     key: number;
@@ -68,25 +71,35 @@ export function Catalog() {
     return () => window.removeEventListener("scroll", handle);
   }, [loading]);
 
+  useEffect(() => {
+    setOverlayer(Boolean(currentPhoto));
+  }, [currentPhoto]);
+
   const handleCkick = (content: { photo: Content; key: number }) => {
     setCurrentPhoto(content);
   };
 
-  const getSrc = (key: string) => url + key;
+  const getSrc = (key: string): string => url + key;
 
   const selectPhoto = (photo: Content) => {
-    setSelecteds({ ...selecteds, [photo.Key]: photo });
+    setCart &&
+      setCart({
+        items: {
+          ...cart.items,
+          [photo.Key]: { ...photo, Url: getSrc(photo.Key) },
+        },
+      });
   };
 
   const hasPhoto = (photo: Content): boolean => {
-    return Boolean(selecteds[photo.Key]);
+    return Boolean(cart.items[photo.Key]);
   };
 
   return (
     <>
       {currentPhoto && (
         <Preview
-          selecteds={selecteds}
+          selecteds={cart.items}
           url={url}
           photo={currentPhoto.photo}
           close={() => setCurrentPhoto(null)}
@@ -101,11 +114,11 @@ export function Catalog() {
           .map((photo: Content, key: number) => (
             <div
               key={key}
-              className="relative overflow-hidden m-3 max-w-[350px] max-h-[350px] flex flex-col justify-center items-center border-2 border-black"
+              className="relative overflow-hidden m-3 max-w-[350px] max-h-[350px] flex flex-col justify-center items-center border-2 border-black bg-black"
             >
               <img
                 onClick={() => handleCkick({ photo, key })}
-                className="cursor-pointer"
+                className="cursor-pointer "
                 alt={photo.Key}
                 loading="lazy"
                 width={350}
@@ -117,7 +130,7 @@ export function Catalog() {
                   <button
                     disabled={hasPhoto(photo)}
                     onClick={() => selectPhoto(photo)}
-                    className="rounded-sm	px-5 py-3 bg-green-600 text-white shadow-md select-none"
+                    className="rounded-sm	px-2 py-2 bg-green-600 text-white shadow-md select-none"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +150,7 @@ export function Catalog() {
                 ) : (
                   <button
                     onClick={() => selectPhoto(photo)}
-                    className="rounded-sm	px-5 py-3 bg-green-600/30 hover:bg-green-600/50 text-white shadow-md select-none"
+                    className="rounded-sm	px-2 py-2 bg-green-600/30 hover:bg-green-600/50 text-white shadow-md select-none"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -157,7 +170,7 @@ export function Catalog() {
                 )}
                 <button
                   onClick={() => handleCkick({ photo, key })}
-                  className="rounded-sm	px-5 py-3 bg-black/30 hover:bg-black/50 text-white shadow-md select-none"
+                  className="rounded-sm	px-2 py-2 bg-black/30 hover:bg-black/50 text-white shadow-md select-none"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

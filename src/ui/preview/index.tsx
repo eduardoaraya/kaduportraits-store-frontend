@@ -1,5 +1,6 @@
 "use client";
 import { Content } from "@kaduportraits-store/contracts/catalog";
+import { ChangeEvent, useContext, useState } from "react";
 
 export function Preview({
   photo,
@@ -18,6 +19,7 @@ export function Preview({
   close: () => void;
   selecteds: { [k: string]: Content };
 }) {
+  const [scale, setScale] = useState<number>(1);
   const handleOverlayerClick = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLElement;
     if (target.classList.contains("overlayer")) return close();
@@ -26,6 +28,12 @@ export function Preview({
   const hasPhoto = (): boolean => {
     return Boolean(selecteds[photo.Key]);
   };
+
+  const handleScale = (event: ChangeEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    setScale(Number(target.value));
+  };
+
   return (
     <>
       <div
@@ -51,15 +59,18 @@ export function Preview({
             />
           </svg>
         </div>
+
         <div className="relative overlayer h-full flex flex-col justify-center items-center">
           <img
+            style={{ transform: `scale(${scale})` }}
             className="shadow-2xl mb-5 select-none"
             alt={photo.Key}
             src={getSrc(photo.Key)}
           />
+
           <button
             disabled={hasPhoto()}
-            className="px-5 py-3 bg-green-600 text-white shadow-md select-none rounded-sm uppercase"
+            className="px-5 py-3 bg-green-600 text-white shadow-md select-none rounded-sm uppercase z-40"
             onClick={() => select()}
           >
             {hasPhoto() ? (
@@ -84,6 +95,16 @@ export function Preview({
               "Adicionar a lista"
             )}
           </button>
+          <input
+            className="mt-10 z-40"
+            type="range"
+            id="volume"
+            name="volume"
+            min="1"
+            max="3"
+            value={scale}
+            onChange={handleScale}
+          />
         </div>
       </div>
     </>
