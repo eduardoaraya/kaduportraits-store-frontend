@@ -63,13 +63,19 @@ export function Cart(): JSX.Element {
         return alert("Preencha corretamente os dados!");
 
       setLoading(true);
-      const response = await sendOrder({
+      await sendOrder({
         name,
         email,
         phone,
         items: cart.items,
       });
-      alert("Solicitação em andamento, aguarde que entraremos em contato!");
+      alert("Solicitação em andamento, aguarde e logo entraremos em contato!");
+      expandCart(false);
+    } catch (_err) {
+      alert(
+        "Ocorreu um erro na sua solicitação, tente novamente ou contate o nosso suporte!"
+      );
+    } finally {
       localStorage.setItem(
         `_order::${new Date().getTime()}`,
         JSON.stringify(cart)
@@ -79,12 +85,6 @@ export function Cart(): JSX.Element {
           items: {},
           total: 0,
         });
-      expandCart(false);
-    } catch (_err) {
-      alert(
-        "Ocorreu um erro na sua solicitação, tente novamente ou contate o nosso suporte!"
-      );
-    } finally {
       setLoading(false);
     }
   };
