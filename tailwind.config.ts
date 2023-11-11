@@ -8,7 +8,15 @@ const config: Config = {
     "./src/ui/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      sans: ["Roboto", "Helvetica"],
+    },
     extend: {
+      colors: {
+        primary: "#2ECC40",
+        secondary: "#001F3F",
+        tertiary: "#FFFFFF",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

@@ -1,9 +1,6 @@
 export async function Welcome() {
   return (
-    <div className="md:p-10 p-5">
-      <h1 className="font-bold md:text-5xl text-xl text-center my-5 text-gray-500">
-        Seja bem-vindo!
-      </h1>
+    <div className="md:p-10 p-5 text-secondary">
       <div className="flex leading-8 md:flex-row flex-col">
         <div className="p-3">
           <p className="mt-3">
@@ -49,8 +46,36 @@ export async function Welcome() {
           </p>
         </div>
       </div>
-      <div className="mt-10">
-        <p className="font-bold text-lg">Preço por foto: R$ 15,00</p>
+    </div>
+  );
+}
+
+export async function ShortWelcome() {
+  return (
+    <div className="p-10 md:p-20 grid grid-cols-4 gap-10 bg-secondary shadow-md rounded-md">
+      <div className="col-span-4 md:col-span-2 text-tertiary leading-8">
+        <p className="mt-3">
+          <span className="text-primary font-bold uppercase text-2xl">
+            Bem-vindo
+          </span>{" "}
+          ao nosso mundo de paixão pelo esporte e fotografia!
+        </p>
+        <p className="mt-3">
+          É um prazer receber você em nosso site de venda de fotos esportivas,
+          <br /> onde a energia e a emoção dos momentos esportivos ganham vida
+          <br /> através das lentes de nossos talentosos fotógrafos.
+        </p>
+      </div>
+      <div className="col-span-4 md:col-span-2 text-tertiary leading-8">
+        <p className="mt-3">
+          Navegue, escolha e adquira as fotos que mais ressoam com você.
+          <br />
+          Elas podem decorar suas paredes, inspirar seu dia a dia ou ser um
+          presente perfeito para um entusiasta do esporte.
+          <br />
+          Além disso, nosso processo de compra é simples e seguro, garantindo
+          que você obtenha as fotos de alta qualidade que merece.
+        </p>
       </div>
     </div>
   );

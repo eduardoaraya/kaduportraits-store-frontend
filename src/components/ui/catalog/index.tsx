@@ -4,8 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import { Preview } from "../preview";
 import "./index.css";
 import { Content, Catalog } from "@kaduportraits-store/contracts/catalog";
-import { CartContext } from "@kaduportraits-store/context/cart-provider";
-import { OverlayerContext } from "@kaduportraits-store/context/overlayer-provider";
+import { CartContext } from "@kaduportraits-store/providers/cart-provider";
+import { OverlayerContext } from "@kaduportraits-store/providers/overlayer-provider";
 
 export function Catalog() {
   const { setOverlayer } = useContext(OverlayerContext);

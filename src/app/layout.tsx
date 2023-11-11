@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Layout as UILayout } from "@kaduportraits-store/components/ui/layout";
+import { GlobalProvider } from "@kaduportraits-store/providers/global-provider";
+
 import "./globals.css";
-import { Header } from "@kaduportraits-store/ui/header";
-import CartProvider from "@kaduportraits-store/context/cart-provider";
-import OverlayerProvider, {
-  OverlayerContext,
-} from "@kaduportraits-store/context/overlayer-provider";
-import { useContext } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,12 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`relative ${inter.className}`}>
-        <OverlayerProvider>
-          <CartProvider>
-            <Header></Header>
-            {children}
-          </CartProvider>
-        </OverlayerProvider>
+        <GlobalProvider>
+          <UILayout>{children}</UILayout>
+        </GlobalProvider>
       </body>
     </html>
   );

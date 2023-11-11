@@ -1,7 +1,7 @@
 "use client";
 
-import { CartContext } from "@kaduportraits-store/context/cart-provider";
-import { OverlayerContext } from "@kaduportraits-store/context/overlayer-provider";
+import { CartContext } from "@kaduportraits-store/providers/cart-provider";
+import { OverlayerContext } from "@kaduportraits-store/providers/overlayer-provider";
 import type { Content } from "@kaduportraits-store/contracts/catalog";
 import { FormEvent, useContext, useRef, useState } from "react";
 
@@ -10,32 +10,11 @@ export type CartType = {
   total?: number;
 };
 
-const sendOrder = async (data: {
-  name: string;
-  email: string;
-  phone: string;
-  items: CartType["items"];
-}) => {
-  try {
-    const response = await fetch(
-      "https://5v6kiswwi4.execute-api.sa-east-1.amazonaws.com/v1/sendOrder",
-      {
-        method: "POST",
-        body: JSON.stringify(data),
-      }
-    );
-    const json = await response.json();
-    return json;
-  } catch (_err) {
-    alert("Ocorreu um erro, tente novamente mais tarde!");
-  }
-};
-
 export function Cart(): JSX.Element {
   const { setOverlayer } = useContext(OverlayerContext);
   const { cart, setCart } = useContext(CartContext);
   const [expanded, setExpanded] = useState<boolean>(false);
-  const cartList = Object.values(cart.items);
+  const cartList = Object.values(cart?.items);
   const inputNameRef = useRef<HTMLInputElement>(null);
   const inputPhoneRef = useRef<HTMLInputElement>(null);
   const inputEmailRef = useRef<HTMLInputElement>(null);
@@ -49,6 +28,27 @@ export function Cart(): JSX.Element {
   const removeItem = (item: Content) => {
     delete cart.items[item.Key];
     setCart && setCart({ ...cart });
+  };
+
+  const sendOrder = async (data: {
+    name: string;
+    email: string;
+    phone: string;
+    items: CartType["items"];
+  }) => {
+    try {
+      const response = await fetch(
+        "https://5v6kiswwi4.execute-api.sa-east-1.amazonaws.com/v1/sendOrder",
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+        }
+      );
+      const json = await response.json();
+      return json;
+    } catch (_err) {
+      alert("Ocorreu um erro, tente novamente mais tarde!");
+    }
   };
 
   const handleSubmit = async (event: FormEvent) => {
@@ -94,7 +94,7 @@ export function Cart(): JSX.Element {
     <>
       <div
         onClick={() => expandCart(true)}
-        className="select-none flex duration-200 items-center shadow-md rounded-full w-[50px] h-[50px] p-2 cursor-pointer hover:bg-black active:bg-black/50 hover:text-white"
+        className="select-none flex duration-200 items-center shadow-md rounded-full w-[50px] h-[50px] p-2 cursor-pointer hover:bg-secondary active:bg-secondary/50 hover:text-white"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
