@@ -50,7 +50,7 @@ export async function Welcome() {
   );
 }
 
-export async function ShortWelcome() {
+export function ShortWelcome() {
   return (
     <div className="p-10 md:p-20 grid grid-cols-4 gap-10 bg-secondary shadow-md rounded-md">
       <div className="col-span-4 md:col-span-2 text-tertiary leading-8">

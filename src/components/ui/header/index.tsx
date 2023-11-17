@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { Cart } from "../cart";
+import { Cart } from "../../features/cart";
 import { useIsClient } from "@kaduportraits-store/hooks/use-is-client";
 
 export function Header() {
   const { isClient } = useIsClient();
-
   return (
     <header className="bg-tertiary fixed top-0 left-0 w-full z-50 shadow-sm">
       <div className="container m-auto py-5 px-3 flex justify-between">

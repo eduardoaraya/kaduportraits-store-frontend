@@ -1,12 +1,10 @@
-import { Banner } from "@kaduportraits-store/components/ui/banner";
-import { Categories } from "@kaduportraits-store/components/ui/categories";
-import { PriceInfo } from "@kaduportraits-store/components/ui/price-info";
-import { ShortWelcome } from "@kaduportraits-store/components/ui/welcome";
+import { Categories } from "@kaduportraits-store/components/features/categories";
+import { PriceInfo } from "@kaduportraits-store/components/features/price-info";
+import { ShortWelcome } from "@kaduportraits-store/components/features/welcome";
 
-export default async function Home() {
+export default function Index() {
   return (
     <>
-      {/* <Banner></Banner> */}
       <div className="container m-auto p-5 md:p-20 mt-5 md:mt-20">
         <ShortWelcome />
       </div>

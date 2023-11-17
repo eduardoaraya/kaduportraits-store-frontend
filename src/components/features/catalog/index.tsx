@@ -1,13 +1,21 @@
 "use client";
 import { debounce_leading } from "@kaduportraits-store/utils/debounce";
 import { useContext, useEffect, useState } from "react";
-import { Preview } from "../preview";
-import "./index.css";
+import { Preview } from "../../ui/preview";
 import { Content, Catalog } from "@kaduportraits-store/contracts/catalog";
 import { CartContext } from "@kaduportraits-store/providers/cart-provider";
 import { OverlayerContext } from "@kaduportraits-store/providers/overlayer-provider";
+import { Button } from "@kaduportraits-store/components/ui/button";
+import { CartSVG } from "@kaduportraits-store/components/svg/cart";
+import { Select } from "@kaduportraits-store/components/ui/select";
+import { prices } from "@kaduportraits-store/static-data/prices";
+import {
+  ArrowLeftSVG,
+  ArrowRightSVG,
+} from "@kaduportraits-store/components/svg/arrow";
+import { Paginator } from "../paginator";
 
-export function Catalog() {
+export function CatalogOld() {
   const { setOverlayer } = useContext(OverlayerContext);
   const { cart, setCart } = useContext(CartContext);
   const [catalog, setCatalog] = useState<Content[]>([]);
@@ -125,7 +133,7 @@ export function Catalog() {
                 height={350}
                 src={getSrc(photo.Key)}
               />
-              <div className="actions">
+              <div className="absolute bottom-0">
                 {hasPhoto(photo) ? (
                   <button
                     disabled={hasPhoto(photo)}
@@ -219,6 +227,64 @@ export function Catalog() {
             ></path>
           </svg>
         )}
+      </div>
+    </>
+  );
+}
+
+export function Catalog() {
+  const [toggle, setToggle] = useState(false);
+  const images = [
+    "https://kaduportraits.s3.sa-east-1.amazonaws.com/public/IMG_4342.jpg",
+    "https://kaduportraits.s3.sa-east-1.amazonaws.com/public/IMG_4427.jpg",
+    "https://kaduportraits.s3.sa-east-1.amazonaws.com/public/IMG_4428.jpg",
+    "https://kaduportraits.s3.sa-east-1.amazonaws.com/public/IMG_4429.jpg",
+    "https://kaduportraits.s3.sa-east-1.amazonaws.com/public/IMG_4430.jpg",
+    "https://kaduportraits.s3.sa-east-1.amazonaws.com/public/IMG_4431.jpg",
+    "https://kaduportraits.s3.sa-east-1.amazonaws.com/public/IMG_4530.jpg",
+    "https://kaduportraits.s3.sa-east-1.amazonaws.com/public/IMG_4531.jpg",
+    "https://kaduportraits.s3.sa-east-1.amazonaws.com/public/IMG_4541.jpg",
+    "https://kaduportraits.s3.sa-east-1.amazonaws.com/public/IMG_4551.jpg",
+  ];
+  return (
+    <>
+      <div className="flex justify-center items-center p-5">
+        <Paginator />
+      </div>
+      <div className="p-3 md:p-0">
+        <div className="flex flex-col gap-5">
+          {images.map((item, key) => (
+            <div
+              key={key}
+              className="grid md:grid-cols-5 grid-cols-1 h-auto shadow-md items-center rounded-sm bg-white"
+            >
+              <div className="overflow-hidden flex h-auto md:col-span-3 col-span-1 justify-center items-center p-10">
+                <img src={item} className="max-h-[600px]" />
+              </div>
+              <div className="col-span-2 p-5">
+                <div className="p-5 flex flex-col">
+                  <Select
+                    label="Opções de qualidade de imagem"
+                    value={prices.medium.price}
+                    options={Object.values(prices).map((price) => ({
+                      value: price.price,
+                      label: `${price.brlFormat}  ${price.name}`,
+                    }))}
+                  />
+                  <div className="flex md:flex-row flex-col md:justify-end justify-center">
+                    <Button className="mt-5" kind="primary">
+                      <CartSVG />
+                      Adicionar
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-center items-center p-5">
+        <Paginator />
       </div>
     </>
   );
