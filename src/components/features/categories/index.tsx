@@ -7,7 +7,7 @@ export function Categories(): JSX.Element {
   const goTo = (id: number) => router.push(`category/${id}`);
   return (
     <>
-      <div className="categories grid grid-cols-6 auto-rows-auto gap-2 md:gap-5 px-5 md:px-10">
+      <div className="categories grid grid-cols-6 auto-rows-auto gap-2 md:gap-5">
         <div
           onClick={() => goTo(categories.kitesurf.id)}
           style={{

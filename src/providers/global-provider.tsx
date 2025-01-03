@@ -2,6 +2,7 @@
 
 import CartProvider from "./cart-provider";
 import OverlayerProvider from "./overlayer-provider";
+import { PreviewProvider } from "./preview-provider";
 
 export function GlobalProvider({
   children,
@@ -10,7 +11,9 @@ export function GlobalProvider({
 }): JSX.Element {
   return (
     <OverlayerProvider>
-      <CartProvider>{children}</CartProvider>
+      <CartProvider>
+        <PreviewProvider>{children}</PreviewProvider>
+      </CartProvider>
     </OverlayerProvider>
   );
 }

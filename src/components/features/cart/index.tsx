@@ -5,6 +5,10 @@ import { OverlayerContext } from "@kaduportraits-store/providers/overlayer-provi
 import type { Content } from "@kaduportraits-store/contracts/catalog";
 import { FormEvent, useContext, useEffect, useRef, useState } from "react";
 import { CartSVG } from "@kaduportraits-store/components/svg/cart";
+import { Preview } from "../preview";
+import { PreviewContext } from "@kaduportraits-store/providers/preview-provider";
+import { prices } from "@kaduportraits-store/static-data/prices";
+import { Select } from "@kaduportraits-store/components/ui/select";
 
 export type CartType = {
   items: { [key: string]: Content };
@@ -12,21 +16,24 @@ export type CartType = {
 };
 
 export function Cart(): JSX.Element {
+  const url = "https://kaduportraits.s3.sa-east-1.amazonaws.com/";
   const { setOverlayer } = useContext(OverlayerContext);
   const { cart, setCart } = useContext(CartContext);
   const [expanded, setExpanded] = useState<boolean>(false);
-  const cartList = Object.values(cart?.items);
+  const cartList: Content[] = Object.values(cart?.items);
   const inputNameRef = useRef<HTMLInputElement>(null);
   const inputPhoneRef = useRef<HTMLInputElement>(null);
   const inputEmailRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { currentPhoto, setCurrentPhoto } = useContext(PreviewContext);
 
   const expandCart = (value: boolean) => {
     setExpanded(value);
     setOverlayer(value);
   };
 
-  const removeItem = (item: Content) => {
+  const removeItem = (item?: Content) => {
+    if (!item) return;
     delete cart.items[item.Key];
     setCart && setCart({ ...cart });
   };
@@ -91,6 +98,18 @@ export function Cart(): JSX.Element {
     }
   };
 
+  const getSrc = (key: string): string => url + key;
+
+  const selectPhoto = (photo: Content) => {
+    setCart &&
+      setCart({
+        items: {
+          ...cart.items,
+          [photo.Key]: { ...photo, Url: getSrc(photo.Key) },
+        },
+      });
+  };
+
   return (
     <>
       <div
@@ -103,7 +122,7 @@ export function Cart(): JSX.Element {
 
       {expanded && (
         <div className="fixed top-0 left-0 z-50 w-full h-full bg-black/40 flex justify-center">
-          <div className="relative bg-white border-2 border-black max-w-screen-md w-full p-10 shadow-md rounded-sm overflow-y-auto">
+          <div className="relative bg-white border-2 w-full p-10 shadow-md rounded-sm overflow-y-auto">
             <div
               className="absolute top-5 right-5 bg-white/90 z-50 cursor-pointer"
               onClick={() => expandCart(false)}
@@ -123,60 +142,65 @@ export function Cart(): JSX.Element {
                 />
               </svg>
             </div>
-            <div className="pt-5">
-              <div className="font-bold flex items-center">
-                {cartList.length === 0 && <p>Sua sacola está vazia!</p>}
-              </div>
-              <ul className="pt-5 h-[400px] md:h-[500px] overflow-y-auto">
-                {cartList.map((item) => (
+            <div className="pt-5 container m-auto grid md:grid-cols-5 grid-cols-1 auto-rows-auto">
+              {cartList.length === 0 && (
+                <div className="font-bold flex items-center md:col-span-3 col-span-1">
+                  <p>Sua sacola está vazia!</p>
+                </div>
+              )}
+              <ul className="md:col-span-3 col-span-1 pt-5 h-[400px] md:h-[500px] overflow-y-auto divide-y divide-gray-100">
+                {cartList.map((item, key) => (
                   <li
-                    key={item.Key}
-                    className="flex flex-row justify-between items-center bg-slate-100 m-1 p-2"
+                    key={key}
+                    className="flex justify-between items-center gap-x-6 p-5"
                   >
-                    <div>
-                      <div
-                        style={{
-                          backgroundImage: `url(${item?.Url})`,
-                          backgroundPosition: "center",
-                          backgroundRepeat: "no-repeat",
-                          backgroundSize: "contain",
-                        }}
-                        className="bg-black border-2 border-black w-[100px] h-[100px] md:w-[200px] md:h-[200px] flex justify-center items-center"
-                      ></div>
-                    </div>
-                    <div>Valor: R$ 15,00</div>
-                    <button
-                      className="text-red-600"
-                      onClick={() => removeItem(item)}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                    <div className="flex min-w-0 gap-x-4">
+                      <img
+                        onClick={() => setCurrentPhoto(item)}
+                        className="h-full w-[80px] flex-none bg-gray-50"
+                        src={item.Url}
+                        alt=""
+                      />
+                      <div className="min-w-0 flex-auto">
+                        <Select
+                          label="Opções de qualidade de imagem"
+                          value={prices.medium.price}
+                          options={Object.values(prices).map((price) => ({
+                            value: price.price,
+                            label: `${price.brlFormat}  ${price.name}`,
+                          }))}
                         />
-                      </svg>
-                    </button>
+                      </div>
+                    </div>
+                    <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                      <button
+                        className="text-red-600"
+                        onClick={() => removeItem(item)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   </li>
                 ))}
               </ul>
               <form
                 onSubmit={handleSubmit}
-                className="px-5 py-3 flex flex-col md:flex-row md:justify-between"
+                className="md:col-span-2 col-span-1 px-5 py-3 flex flex-col md:flex-row md:justify-between"
               >
-                <p className="text-lg	 font-semibold w-[250px]">
-                  Total: R${" "}
-                  {(cartList.length * 15).toFixed(2).replace(".", ",")}
-                </p>
-
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col w-full p-5">
                   <label className="mt-1" htmlFor="cart-name">
                     Nome
                   </label>
@@ -243,6 +267,12 @@ export function Cart(): JSX.Element {
                   </button>
                 </div>
               </form>
+              <div className="md:col-span-3 col-span-1">
+                <p className="font-sans text-lg text-left">
+                  Total: R${" "}
+                  {(cartList.length * 15).toFixed(2).replace(".", ",")}
+                </p>
+              </div>
             </div>
           </div>
         </div>
