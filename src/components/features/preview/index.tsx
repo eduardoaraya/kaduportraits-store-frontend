@@ -1,6 +1,6 @@
 "use client";
 import { Content } from "@kaduportraits-store/contracts/catalog";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export function Preview({
   photo,
@@ -26,7 +26,7 @@ export function Preview({
   };
   const getSrc = (key: string): string => url + key;
   const hasPhoto = (): boolean => {
-    return Boolean(selecteds[photo.Key]);
+    return Boolean(selecteds[photo?.Key]);
   };
 
   const handleScale = (event: ChangeEvent<HTMLInputElement>) => {
@@ -64,8 +64,8 @@ export function Preview({
           <img
             style={{ transform: `scale(${scale})` }}
             className="shadow-2xl mb-5 select-none"
-            alt={photo.Key}
-            src={getSrc(photo.Key)}
+            alt={photo?.Key}
+            src={getSrc(photo?.Key)}
           />
 
           <button

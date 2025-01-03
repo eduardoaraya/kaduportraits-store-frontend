@@ -8,7 +8,7 @@ export function Layout({ children }: PropsWithChildren): JSX.Element {
   return (
     <>
       <Header />
-      <main className="pt-[115px]">{children}</main>
+      <main className="pt-[225px]">{children}</main>
       <Footer />
     </>
   );

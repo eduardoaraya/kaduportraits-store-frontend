@@ -1,6 +1,6 @@
 "use client";
 
-import { CartType } from "@kaduportraits-store/components/ui/cart";
+import { CartType } from "@kaduportraits-store/components/features/cart";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
 
 const STORAGE_KEY = "_cart";
