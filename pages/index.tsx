@@ -14,7 +14,7 @@ export default function Index() {
         <Categories />
       </div>
 
-      <div className="container m-auto p-5 md:p-10">
+      <div className="container m-auto mt-10 p-5 md:p-10">
         <Catalog products={products} type={`box`} />
       </div>
 

@@ -239,19 +239,19 @@ import { CatalogProduct } from "./catalog-product";
 
 const getClassString = (type?: string) =>
   type
-    ? "rounded-sm shadow-md p-5 w-full max-w-[300px]"
+    ? "rounded-sm hover:shadow-lg shadow-sm w-full h-full col-span-3"
     : "grid md:grid-cols-5 grid-cols-1 h-auto shadow-md items-center rounded-sm";
 
 export const Catalog: FunctionComponent<ICatalog> = ({ products, type }) => {
   const getFlexClass = (type: string) =>
-    type === "box" ? `flex-row` : `flex-col`;
+    type === "box" ? `grid grid-cols-12` : `flex flex-col`;
 
   return (
     <div className="w-full h-full">
       <div
-        className={`flex ${getFlexClass(
+        className={`cursor-pointer transition-all ${getFlexClass(
           type
-        )} flex-wrap gap-3 m-auto w-full justify-start h-full min-h-[75vh]`}
+        )} flex-wrap gap-3 m-auto w-full justify-start h-full`}
       >
         {products.map((item, key) => (
           <div className={getClassString(type)}>

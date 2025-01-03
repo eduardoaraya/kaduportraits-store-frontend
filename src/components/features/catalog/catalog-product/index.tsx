@@ -13,9 +13,8 @@ export const CatalogProduct: FunctionComponent<ICatalogProduct> = (product) => {
           <img src={image.src} key={key} className="max-h-[600px]" />
         ))}
       </div>
-      <div className="col-span-2 p-2">
-        <div className="p-5 flex flex-col">
-          {/* <Select
+      <div className="p-5 flex flex-col h-full">
+        {/* <Select
             label="Opções de qualidade de imagem"
             value={prices.medium.price}
             options={Object.values(prices).map((price) => ({
@@ -23,12 +22,14 @@ export const CatalogProduct: FunctionComponent<ICatalogProduct> = (product) => {
               label: `${price.brlFormat}  ${price.name}`,
             }))}
           /> */}
-          <div className="flex md:flex-row flex-col md:justify-end justify-center">
-            <Button className="mt-5" kind="primary">
-              <CartSVG />
-              Adicionar
-            </Button>
-          </div>
+        <div className="h-full flex flex-1 justify-between">
+          <h1 className="text-primary text-lg">{product.productTitle}</h1>
+          <h3 className="text-secondary text-xl">R$ {product.productPrice}</h3>
+        </div>
+        <div className="flex md:flex-row flex-col md:justify-end justify-center">
+          <Button className="mt-5" kind="primary">
+            <CartSVG />
+          </Button>
         </div>
       </div>
     </div>

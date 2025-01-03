@@ -3,7 +3,13 @@ import { ICatalogProduct } from "@kaduportraits-store/components/features/catalo
 export const products: ICatalogProduct[] = Array
     .from({length: 7}).map((_, index) => ({
         actions: [],
-        coverImages: [],
+        coverImages: [
+            {
+                src: "/shiki-logo.png",
+                height: 100,
+                width: 100
+            }
+        ],
         productAlt: `Product ${index}`,
         productDescription: `Product ${index}`,
         productId: (Math.random() * 100)?.toFixed(0),
