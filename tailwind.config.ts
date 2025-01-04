@@ -10,12 +10,16 @@ const config: Config = {
   theme: {
     fontFamily: {
       sans: ["Roboto", "Helvetica"],
+      title: ["Playfair Display"],
+      body: ["Montserrat"]
     },
     extend: {
       colors: {
-        primary: "#2ECC40",
-        secondary: "#001F3F",
-        tertiary: "#FFFFFF",
+        primary: "#4a767f",
+        secondary: "#222",
+        body: "#222",
+        tertiary: "#f8f7f2",
+        highlight: "#f8f7f2",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

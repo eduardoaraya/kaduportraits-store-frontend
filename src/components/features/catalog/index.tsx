@@ -239,7 +239,7 @@ import { CatalogProduct } from "./catalog-product";
 
 const getClassString = (type?: string) =>
   type
-    ? "rounded-sm hover:shadow-lg shadow-sm w-full h-full col-span-3"
+    ? "rounded-sm hover:shadow-lg shadow-sm w-full h-full xm:col-span-2 lg:col-span-3"
     : "grid md:grid-cols-5 grid-cols-1 h-auto shadow-md items-center rounded-sm";
 
 export const Catalog: FunctionComponent<ICatalog> = ({ products, type }) => {
@@ -254,14 +254,17 @@ export const Catalog: FunctionComponent<ICatalog> = ({ products, type }) => {
         )} flex-wrap gap-3 m-auto w-full justify-start h-full`}
       >
         {products.map((item, key) => (
-          <div className={getClassString(type)}>
+          <div
+            key={key}
+            className="rounded-sm hover:shadow-lg shadow-sm w-full h-full col-span-6 lg:col-span-3"
+          >
             <CatalogProduct key={key} {...item} />
           </div>
         ))}
       </div>
-      <div className="pt-10 flex items-center">
+      {/* <div className="pt-10 flex items-center">
         {products.length > 0 && <Paginator />}
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -2,7 +2,7 @@ export interface ICatalogProduct {
     productId: string;
     productTitle: string;
     productNumberRating: number;
-    productPrice: number;
+    productPrice: number | string;
     productDiscountPorcet: number;
     productShortDescription: string;
     productAlt: string;

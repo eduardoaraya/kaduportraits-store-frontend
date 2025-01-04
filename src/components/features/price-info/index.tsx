@@ -1,32 +1,42 @@
 export function PriceInfo(): JSX.Element {
   return (
     <>
-      <div className="flex gap-10 md:gap-20 flex-col md:flex-row leading-8">
-        <div className="w-full flex flex-col justify-center items-center h-[150px] md:h-auto rounded-md">
-          <p className="uppercase font-bold text-primary text-2xl md:mb-5">
-            R$ 7,99
-          </p>
-          <p className="uppercase font-bold text-tertiary">Qualidade Baixa</p>
-          <p className="text-tertiary text-center">
-            Não aconselhável editar ou adicionar filtro a imagem
-          </p>
-        </div>
-        <div className="w-full flex flex-col justify-center items-center h-[150px] md:h-auto rounded-md">
-          <p className="uppercase font-bold text-primary text-2xl md:mb-5">
-            R$ 14,99
-          </p>
-          <p className="uppercase font-bold text-tertiary">Qualidade Média</p>
-          <p className="text-tertiary text-center">
-            Ideal para fazer edições e postagens nas redes sociais.
+      <div className="grid grid-cols-3 lg:grid-cols-6 gap-10 md:gap-10 leading-8">
+        <div className="col-span-3 flex flex-col justify-center items-center md:h-auto rounded-md bg-highlight p-16">
+          <p className="font-medium text-secondary text-2xl md:mb-5">🌿</p>
+          <p className="uppercase font-semibold text-primary">Planta</p>
+          <p className="text-primary font-body text-md p-5 text-center">
+            Representa aromas naturais, terrosos e calmantes. Destaca as
+            fragrâncias frescas e verdes que trazem uma sensação de
+            tranquilidade e conexão com a natureza.
           </p>
         </div>
-        <div className="w-full flex flex-col justify-center items-center h-[150px] md:h-auto rounded-md">
-          <p className="uppercase font-bold text-primary text-2xl md:mb-5">
-            R$ 24,99
+        <div className="col-span-3 flex flex-col justify-center items-center md:h-auto rounded-md bg-highlight p-16">
+          <p className="font-medium text-secondary text-2xl md:mb-5">🌹</p>
+          <p className="uppercase font-semibold text-primary">A Rosa</p>
+          <p className="text-primary font-body text-md p-5 text-center">
+            Simboliza elegância, romance e beleza atemporal. Reflete as
+            fragrâncias florais clássicas e sofisticadas que capturam a essência
+            das rosas em plena floração.
           </p>
-          <p className="uppercase font-bold text-tertiary">Qualidade Alta</p>
-          <p className="text-tertiary text-center">
-            Ideal para impressões. Imagem com muitos detalhes.
+        </div>
+        <div className="col-span-3 flex flex-col justify-center items-center md:h-auto rounded-md bg-highlight p-16">
+          <p className="font-medium text-secondary text-2xl md:mb-5">🌞</p>
+          <p className="uppercase font-semibold text-primary">Sol</p>
+          <p className="text-primary font-body text-md p-5 text-center">
+            Calor, energia e radiância. Ele incorpora as fragrâncias vibrantes e
+            revigorantes que lembram dias ensolarados, estimulando os sentidos
+            com notas alegres e brilhantes.
+          </p>
+        </div>
+        <div className="col-span-3 flex flex-col justify-center items-center md:h-auto rounded-md bg-highlight p-16">
+          <p className="font-medium text-secondary text-2xl md:mb-5">❄️</p>
+          <p className="uppercase font-semibold text-primary">Neve</p>
+          <p className="text-primary font-body text-md p-5 text-center">
+            Representa as fragrâncias frescas, revigorantes e refrescantes
+            frequentemente associadas ao inverno e à pureza do gelo. Evoca a
+            sensação de uma paisagem nevada, trazendo uma sensação de pureza e
+            tranquilidade.
           </p>
         </div>
       </div>

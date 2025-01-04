@@ -4,7 +4,7 @@ import "./index.module.css";
 
 const getClassName = (type: string) =>
   type === "box"
-    ? "flex flex-wrap gap-10 w-full justify-center"
+    ? "flex flex-wrap gap-10 w-full justify-center lg:py-[75px]"
     : `categories grid grid-cols-6 auto-rows-auto gap-2 md:gap-5`;
 
 export function Categories(): JSX.Element {
@@ -24,10 +24,10 @@ export function Categories(): JSX.Element {
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
               }}
-              className={"rounded-full shadow-xl h-full w-full"}
+              className={"rounded-full shadow-md h-full w-full"}
             ></div>
-            <div className="flex justify-center w-full pt-5">
-              <h1 className="relative z-10 text-secondary font-bold text-2xl">
+            <div className="flex justify-center w-full pt-10">
+              <h1 className="relative z-10 text-secondary font-body text-2xl">
                 {categories.kitesurf.name}
               </h1>
             </div>

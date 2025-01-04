@@ -5,16 +5,28 @@ import { useIsClient } from "@kaduportraits-store/hooks/use-is-client";
 export function Header() {
   const { isClient } = useIsClient();
   return (
-    <header className="bg-tertiary fixed top-0 left-0 w-full z-50 shadow-sm">
-      <div className="container m-auto py-5 px-3 flex flex-col items-center justify-center">
-        <Image alt="logo" width="100" height="80" src="/shiki-logo.png"></Image>
-        <nav className="w-full flex items-center justify-center p-5">
-          <ul className="flex items-center justify-center gap-5 mr-10 text-secondary font-sans">
-            <li>Home</li>
-            <li>Sobre</li>
-            <li>Contato</li>
+    <header className="bg-highlight fixed top-0 left-0 w-full z-50 shadow-sm">
+      <div className="container m-auto py-2 lg:py-5 px-1 lg:px-3 flex lg:items-center lg:justify-center">
+        <div className="flex justify-start items-center w-full">
+          <Image
+            alt="logo"
+            width="65"
+            height="65"
+            src="/shiki-logo.png"
+          ></Image>
+          <h1 className="font-body text-lg lg:text-4xl text-primary">Shiki</h1>
+        </div>
+        <nav className="w-full flex items-center justify-between lg:justify-center">
+          <ul className="w-full flex items-center justify-end gap-5 text-secondary">
+            <li className="font-sans">Home</li>
+            <li className="font-sans">Sobre</li>
+            <li className="font-sans">Contato</li>
           </ul>
-          {isClient && <Cart />}
+          {isClient && (
+            <div className="ml-10 p-2">
+              <Cart />
+            </div>
+          )}
         </nav>
       </div>
     </header>

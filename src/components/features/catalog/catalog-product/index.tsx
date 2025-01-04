@@ -22,13 +22,19 @@ export const CatalogProduct: FunctionComponent<ICatalogProduct> = (product) => {
               label: `${price.brlFormat}  ${price.name}`,
             }))}
           /> */}
-        <div className="h-full flex flex-1 justify-between">
-          <h1 className="text-primary text-lg">{product.productTitle}</h1>
-          <h3 className="text-secondary text-xl">R$ {product.productPrice}</h3>
+        <div className="h-full flex flex-col flex-1 justify-between">
+          <h1 className="text-primary font-title lg:text-xl font-semibold">
+            {product.productTitle}
+          </h1>
+
+          <span className="text-secondary font-body lg:text-2xl mt-3">
+            R$ {product.productPrice}
+          </span>
         </div>
         <div className="flex md:flex-row flex-col md:justify-end justify-center">
           <Button className="mt-5" kind="primary">
             <CartSVG />
+            Comprar
           </Button>
         </div>
       </div>
